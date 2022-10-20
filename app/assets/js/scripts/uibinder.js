@@ -68,7 +68,7 @@ function showMainUI(data){
     updateSelectedServer(data.getServer(ConfigManager.getSelectedServer()))
     refreshServerStatus()
     setTimeout(() => {
-        document.getElementById('frameBar').style.backgroundColor = 'rgba(0, 0, 0, 0.5)'
+        document.getElementById('frameBar').style.backgroundColor = 'rgba(0, 0, 0, 0)'
         document.body.style.backgroundImage = `url('assets/images/backgrounds/${document.body.getAttribute('bkid')}.jpg')`
         $('#main').show()
 
@@ -82,6 +82,7 @@ function showMainUI(data){
 
         if(ConfigManager.isFirstLaunch()){
             currentView = VIEWS.welcome
+            document.getElementById('frameBar').style.backgroundColor = 'rgba(0, 0, 0, 0.5)'
             $(VIEWS.welcome).fadeIn(1000)
         } else {
             if(isLoggedIn){
@@ -114,9 +115,9 @@ function showFatalStartupError(){
         $('#loadingContainer').fadeOut(250, () => {
             document.getElementById('overlayContainer').style.background = 'none'
             setOverlayContent(
-                'Fatal Error: Unable to Load Distribution Index',
-                'A connection could not be established to our servers to download the distribution index. No local copies were available to load. <br><br>The distribution index is an essential file which provides the latest server information. The launcher is unable to start without it. Ensure you are connected to the internet and relaunch the application.',
-                'Close'
+                "Erreur fatale: Impossible de charger l'index de distribution",
+                "Aucune connexion n'a pu être établie avec nos serveurs pour télécharger l'index de distribution. Aucune copie locale n'était disponible pour le chargement. <br><br>L'index de distribution est un fichier essentiel qui fournit les dernières informations sur le serveur. Le launcher ne peut pas démarrer sans lui. Assurez-vous d'être connecté à Internet et relancez l'application. Si le problème persiste, merci de contacter un admin du discord.",
+                'Fermer'
             )
             setOverlayHandler(() => {
                 const window = remote.getCurrentWindow()
@@ -328,10 +329,10 @@ async function validateSelectedAccount(){
             ConfigManager.save()
             const accLen = Object.keys(ConfigManager.getAuthAccounts()).length
             setOverlayContent(
-                'Failed to Refresh Login',
-                `We were unable to refresh the login for <strong>${selectedAcc.displayName}</strong>. Please ${accLen > 0 ? 'select another account or ' : ''} login again.`,
-                'Login',
-                'Select Another Account'
+                "Échec de l'actualisation de la connexion",
+                `Nous n'avons pas pu actualiser la connexion pour <strong>${selectedAcc.displayName}</strong>. Veuillez ${accLen > 0 ? 'sélectionnez un autre compte ou ' : ''} reconnectez-vous.`,
+                'Connexion',
+                'Sélectionnez un autre compte'
             )
             setOverlayHandler(() => {
 
